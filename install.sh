@@ -9,8 +9,12 @@ cp init_sql.sql /tmp/init_sql.sql -f
 
 #apt list --upgradable
 
+wget https://www.emqx.cn/downloads/broker/v4.2.6/emqx-ubuntu18.04-4.2.6-x86_64.deb
+sudo dpkg -i emqx-ubuntu18.04-4.2.6-x86_64.deb
+sudo emqx start
+
 # 1. install requirements
-apt -f -y install dialog mosquitto mosquitto-clients redis-server redis-tools postgresql apt-transport-https dirmngr
+apt -f -y install dialog redis-server redis-tools postgresql apt-transport-https dirmngr
 
 # 2. setup PostgreSQL databases and users
 sudo -u postgres psql -c "create role chirpstack_as with login password 'dbpassword';"
