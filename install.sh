@@ -9,6 +9,28 @@ cp init_sql.sql /tmp/init_sql.sql -f
 
 #apt list --upgradable
 
+#influx
+wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.4_amd64.deb
+sudo dpkg -i influxdb_1.8.4_amd64.deb
+
+sudo apt-get update && sudo apt-get install influxdb
+sudo systemctl unmask influxdb.service
+sudo systemctl start influxdb
+
+#
+sudo apt-get install -y adduser libfontconfig1
+wget https://dl.grafana.com/oss/release/grafana_7.4.3_amd64.deb
+sudo dpkg -i grafana_7.4.3_amd64.deb
+
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+
+sudo systemctl enable grafana-server.service
+
+sudo service grafana-server start
+sudo service grafana-server status
+
 # 1. install requirements
 apt -f -y install dialog mosquitto mosquitto-clients redis-server redis-tools postgresql apt-transport-https dirmngr
 
