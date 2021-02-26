@@ -28,8 +28,7 @@ sudo systemctl status grafana-server
 
 sudo systemctl enable grafana-server.service
 
-sudo service grafana-server start
-sudo service grafana-server status
+
 
 # 1. install requirements
 apt -f -y install dialog mosquitto mosquitto-clients redis-server redis-tools postgresql apt-transport-https dirmngr
