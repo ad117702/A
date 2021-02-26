@@ -7,46 +7,10 @@ fi
 
 cp init_sql.sql /tmp/init_sql.sql -f
 
-# install influxdata
-wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-source /etc/lsb-release
-echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-
-sudo apt-get update && sudo apt-get install influxdb
-sudo systemctl unmask influxdb.service
-sudo systemctl start influxdb
-
-# install Grafana
-sudo apt-get install -y adduser libfontconfig1
-wget https://dl.grafana.com/oss/release/grafana_7.3.7_amd64.deb
-sudo dpkg -i grafana_7.3.7_amd64.deb
-
-sudo apt-get update
-sudo apt-get install grafana
-
-sudo systemctl daemon-reload
-sudo systemctl start grafana-server
-sudo systemctl status grafana-server
-
-sudo systemctl enable grafana-server.service
-
-# install InfluxDB
-wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-source /etc/lsb-release
-echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-
-sudo apt-get update && sudo apt-get install influxdb
-sudo service influxdb start
-
-
 #apt list --upgradable
 
-wget https://www.emqx.cn/downloads/broker/v4.2.6/emqx-ubuntu18.04-4.2.6-x86_64.deb
-sudo dpkg -i emqx-ubuntu18.04-4.2.6-x86_64.deb
-sudo emqx start
-
 # 1. install requirements
-apt -f -y install dialog redis-server redis-tools postgresql apt-transport-https dirmngr
+apt -f -y install dialog mosquitto mosquitto-clients redis-server redis-tools postgresql apt-transport-https dirmngr
 
 # 2. setup PostgreSQL databases and users
 sudo -u postgres psql -c "create role chirpstack_as with login password 'dbpassword';"
@@ -98,4 +62,3 @@ systemctl restart chirpstack-application-server
 
 # start chirpstack-gateway-bridge
 systemctl restart chirpstack-gateway-bridge
-
